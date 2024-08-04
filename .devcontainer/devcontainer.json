@@ -1,0 +1,19 @@
+{
+    "image": "ghcr.io/octodemo/development-containers/javascript-nodejs-20:base-202408-r2",
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "ms-azuretools.vscode-docker",
+          "christian-kohler.npm-intellisense",
+          "github.github-vscode-theme",
+          "vitest.explorer",
+          "GitHub.copilot"
+        ],
+        "settings": {
+          "telemetry.enableTelemetry": false,
+          "extensions.ignoreRecommendations": true
+        }
+      }
+    },
+    "postAttachCommand": "npm install",
+  }
