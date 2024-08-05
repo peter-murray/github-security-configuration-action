@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
-import { getSecurityConfigurationObject, GitHub } from 'src/GitHub.js';
-import { GitHubSecurityConfigurationOptions } from 'src/SecurityConfiguration.js';
+import { getSecurityConfigurationObject, GitHub } from '../GitHub.js';
+import { GitHubSecurityConfigurationOptions } from '../SecurityConfiguration.js';
 import { getRequiredInput } from '../action-utils.js';
 import { inspect } from 'util';
 
