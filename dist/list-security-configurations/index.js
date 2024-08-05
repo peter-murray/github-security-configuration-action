@@ -30833,7 +30833,10 @@ class GitHub {
     }
     async getSecurityConfigurationByName(org, name) {
         const configurations = await this.getAllSecurityConfigurations(org);
-        return configurations.find((config) => config.name === name);
+        if (configurations.length > 0) {
+            return configurations.find((config) => config.name === name);
+        }
+        return undefined;
     }
     async createSecurityConfiguration(org, config) {
         const result = await this.octokit.request('POST /orgs/{org}/code-security/configurations', {
