@@ -28,6 +28,7 @@ async function exec() {
   let parsedConfig: GitHubSecurityConfigurationOptions;
   try {
     //TODO use VineJS for this
+    core.info(`Parsing configuration: ${inputs.configuration}`);
     parsedConfig = JSON.parse(inputs.configuration);
   } catch (err: any) {
     core.error(err);
