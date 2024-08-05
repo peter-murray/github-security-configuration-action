@@ -5,8 +5,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "test": "vitest run",
+    "build": "tsc",
+    "build:create-security-configuration": "ncc build lib/actions/create-security-configuration.js -o dist/create-security-configuration --source-map",
+    "build:get-security-configuration": "ncc build lib/actions/get-security-configuration.js -o dist/get-security-configuration --source-map",
+    "build:list-security-configurations": "ncc build lib/actions/list-security-configurations.js -o dist/list-security-configurations --source-map",
+    "build:actions": "npm run build && npm run build:create-security-configuration && npm run build:get-security-configuration && npm run build:list-security-configurations"
   },
   "keywords": [],
   "author": "peter-murray",

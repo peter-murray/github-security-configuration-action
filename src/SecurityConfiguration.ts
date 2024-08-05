@@ -3,9 +3,7 @@ export type GitHubSecurityFeatureState = 'enabled' | 'disabled' | 'not_set'
 
 export type Enforcement = 'enforced' | 'unenforced';
 
-export type GitHubSecurityConfiguration = {
-  name: string;
-  description: string;
+export type GitHubSecurityConfigurationOptions = {
   advanced_security: GitHubSecurityFeatureState;
   dependency_graph: GitHubSecurityFeatureState;
   dependabot_alerts: GitHubSecurityFeatureState;
@@ -15,6 +13,11 @@ export type GitHubSecurityConfiguration = {
   secret_scanning_push_protection: GitHubSecurityFeatureState;
   secret_scanning_validity_checks: GitHubSecurityFeatureState;
   private_vulnerability_reporting: GitHubSecurityFeatureState;
+}
+
+export type GitHubSecurityConfiguration = GitHubSecurityConfigurationOptions & {
+  name: string;
+  description: string;
   enforcement: Enforcement;
 }
 
@@ -50,5 +53,19 @@ export class SecurityConfiguration {
 
   get isEnforced(): boolean {
     return this.config.enforcement === 'enforced';
+  }
+
+  get configuration(): GitHubSecurityConfigurationOptions {
+    return {
+      advanced_security: this.config.advanced_security,
+      dependency_graph: this.config.dependency_graph,
+      dependabot_alerts: this.config.dependabot_alerts,
+      dependabot_security_updates: this.config.dependabot_security_updates,
+      code_scanning_default_setup: this.config.code_scanning_default_setup,
+      secret_scanning: this.config.secret_scanning,
+      secret_scanning_push_protection: this.config.secret_scanning_push_protection,
+      secret_scanning_validity_checks: this.config.secret_scanning_validity_checks,
+      private_vulnerability_reporting: this.config.private_vulnerability_reporting,
+    }
   }
 }

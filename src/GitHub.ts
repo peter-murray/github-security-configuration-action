@@ -1,13 +1,25 @@
 import { Octokit } from '@octokit/rest';
-import { SecurityConfiguration } from './SecurityConfiguration.js';
+import { GitHubSecurityConfiguration, GitHubSecurityConfigurationOptions, SecurityConfiguration } from './SecurityConfiguration.js';
+
+export const DEFAULT_SECURITY_CONFIGURATION: GitHubSecurityConfigurationOptions = {
+  advanced_security: 'disabled',
+  dependency_graph: 'enabled',
+  dependabot_alerts: 'disabled',
+  dependabot_security_updates: 'disabled',
+  code_scanning_default_setup: 'disabled',
+  secret_scanning: 'disabled',
+  secret_scanning_push_protection: 'disabled',
+  secret_scanning_validity_checks: 'disabled',
+  private_vulnerability_reporting: 'disabled',
+}
 
 
 export class GitHub {
 
   private octokit: Octokit;
 
-  constructor() {
-    this.octokit = getOctokit();
+  constructor(token?: string, baseUrl?: string) {
+    this.octokit = getOctokit(token, baseUrl);
   }
 
 
@@ -45,7 +57,7 @@ export class GitHub {
     return configurations.find((config) => config.name === name);
   }
 
-  async createSecurityConfiguration(org: string, config: SecurityConfiguration): Promise<boolean> {
+  async createSecurityConfiguration(org: string, config: GitHubSecurityConfiguration): Promise<boolean> {
     const result = await this.octokit.request('POST /orgs/{org}/security/configurations', {
       org: org,
       ...config,
@@ -57,10 +69,22 @@ export class GitHub {
     return result.status === 201;
   }
 
-  async updateSecurityConfiguration(org: string, id: number, config: SecurityConfiguration) {
+  async updateSecurityConfiguration(org: string, id: number, config: GitHubSecurityConfiguration) {
     //TODO
     // 200 updated, 204 no changes made
   }
+}
+
+export function getSecurityConfigurationObject(name: string, description: string, config: Partial<GitHubSecurityConfigurationOptions>, enforced: boolean = false): GitHubSecurityConfiguration {
+  const mergedConfig: GitHubSecurityConfiguration = {
+    ...DEFAULT_SECURITY_CONFIGURATION,
+    ...config,
+    name: name,
+    description: description,
+    enforcement: enforced ? 'enforced' : 'unenforced'
+  };
+
+  return mergedConfig;
 }
 
 

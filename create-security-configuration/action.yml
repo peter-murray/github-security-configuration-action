@@ -1,0 +1,48 @@
+name: Create Security Configuration
+description: Creates a new security configuration
+author: Peter Murray
+
+inputs:
+  github_token:
+    description: The GitHub token to use to validate the provided data
+    type: string
+    default: ${{ github.token }}
+
+  github_api_url:
+    description: The GitHub API URL to use
+    type: string
+    default: ${{ github.api_url }}
+
+  organization:
+    description: The organization to fetch the security configuration from
+    type: string
+    required: true
+
+  name:
+    description: The name of the security configuration to fetch
+    type: string
+    required: true
+
+  description:
+    description: The description of the security configuration
+    type: string
+    required: true
+
+  configuration:
+    description: The configuration of the security configuration as a JSON encoded payload
+    type: string
+    required: true
+
+  enforcement:
+    description: The enforcement level of the security configuration
+    type: string
+    default: 'unenforced'
+    required: false
+
+outputs:
+  id:
+    description: The ID of the security configuration
+
+runs:
+  using: node20
+  main: '../dist/create-security-configuration/index.js'

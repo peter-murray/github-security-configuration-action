@@ -1,0 +1,33 @@
+name: Get Security Configuration
+description: Fetches a security configuration by name
+author: Peter Murray
+
+inputs:
+  github_token:
+    description: The GitHub token to use to validate the provided data
+    default: ${{ github.token }}
+
+  organization:
+    description: The organization to fetch the security configuration from
+    required: true
+
+  name:
+    description: The name of the security configuration to fetch
+    required: true
+
+outputs:
+  id:
+    description: The ID of the security configuration
+
+  name:
+    description: The name of the security configuration
+
+  configuration:
+    description: The configuration of the security configuration as a JSON encoded payload
+
+  is_enforced:
+    description: Whether the security configuration is enforced
+
+runs:
+  using: node20
+  main: '../dist/get-security-configuration/index.js'

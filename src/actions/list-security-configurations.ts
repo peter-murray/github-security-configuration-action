@@ -23,8 +23,9 @@ async function exec() {
   data.forEach((config) => {
     core.info(`Name: ${config.name}`);
     core.info(`-----------------------------------------------------------------------------`);
-    core.info(`  Description:  ${config.description}`);
-    core.info(`  Enforced:     ${config.isEnforced}`);
+    core.info(`  Description:    ${config.description}`);
+    core.info(`  Configuration:  ${config.configuration}`);
+    core.info(`  Enforced:       ${config.isEnforced}`);
   });
   core.endGroup();
 }
