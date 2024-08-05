@@ -1,4 +1,4 @@
-import './sourcemap-register.cjs';import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module";
+import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module";
 /******/ var __webpack_modules__ = ({
 
 /***/ 7351:
@@ -30742,6 +30742,12 @@ var __webpack_exports__ = {};
 
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
 var core = __nccwpck_require__(2186);
+;// CONCATENATED MODULE: ./lib/action-utils.js
+
+function getRequiredInput(name) {
+    return core.getInput(name, { required: true });
+}
+//# sourceMappingURL=action-utils.js.map
 // EXTERNAL MODULE: external "util"
 var external_util_ = __nccwpck_require__(3837);
 // EXTERNAL MODULE: ./node_modules/@octokit/rest/dist-node/index.js
@@ -30864,6 +30870,7 @@ function getOctokit(token, baseUrl) {
 
 
 
+
 async function run() {
     try {
         await exec();
@@ -30875,7 +30882,7 @@ async function run() {
 }
 run();
 async function exec() {
-    const org = core.getInput('organization', { required: true });
+    const org = getRequiredInput('organization');
     const github = new GitHub();
     const data = await github.getAllSecurityConfigurations(org);
     core.startGroup('Security Configurations');
@@ -30891,5 +30898,3 @@ async function exec() {
 //# sourceMappingURL=list-security-configurations.js.map
 })();
 
-
-//# sourceMappingURL=index.js.map

@@ -7,9 +7,9 @@
   "scripts": {
     "test": "vitest run",
     "build": "tsc",
-    "build:create-security-configuration": "ncc build lib/actions/create-security-configuration.js -o dist/create-security-configuration --source-map",
-    "build:get-security-configuration": "ncc build lib/actions/get-security-configuration.js -o dist/get-security-configuration --source-map",
-    "build:list-security-configurations": "ncc build lib/actions/list-security-configurations.js -o dist/list-security-configurations --source-map",
+    "build:create-security-configuration": "ncc build lib/actions/create-security-configuration.js -o dist/create-security-configuration",
+    "build:get-security-configuration": "ncc build lib/actions/get-security-configuration.js -o dist/get-security-configuration",
+    "build:list-security-configurations": "ncc build lib/actions/list-security-configurations.js -o dist/list-security-configurations",
     "build:actions": "npm run build && npm run build:create-security-configuration && npm run build:get-security-configuration && npm run build:list-security-configurations"
   },
   "keywords": [],
@@ -21,14 +21,12 @@
   "dependencies": {
     "@actions/core": "^1.10.1",
     "@actions/github": "^6.0.0",
-    "@octokit/rest": "^20.1.1",
-    "@vinejs/vine": "^2.1.0"
+    "@octokit/rest": "^20.1.1"
   },
   "devDependencies": {
     "vitest": "^1.6.0",
     "@types/node": "^20.14.9",
     "@vercel/ncc": "^0.38.1",
-    "chai": "^4.3.4",
-    "typescript": "^5.5.2"
+    "typescript": "^5.5.4"
   }
 }

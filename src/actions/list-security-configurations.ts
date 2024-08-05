@@ -1,4 +1,5 @@
 import * as core from '@actions/core';
+import { getRequiredInput } from '../action-utils.js';
 import { inspect } from 'util';
 import { GitHub } from '../GitHub.js';
 
@@ -14,7 +15,7 @@ run();
 
 
 async function exec() {
-  const org = core.getInput('organization', {required: true});
+  const org = getRequiredInput('organization');
 
   const github = new GitHub();
   const data = await github.getAllSecurityConfigurations(org);

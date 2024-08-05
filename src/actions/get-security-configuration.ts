@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
+import { getRequiredInput } from '../action-utils.js';
 import { inspect } from 'util';
 import { GitHub } from '../GitHub.js';
-import { getRequiredInput } from 'src/util.js';
 
 async function run() {
   try {

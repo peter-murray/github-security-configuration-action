@@ -1,4 +1,4 @@
-import './sourcemap-register.cjs';import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module";
+import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module";
 /******/ var __webpack_modules__ = ({
 
 /***/ 7351:
@@ -24826,14 +24826,6 @@ module.exports = eval("require")("src/GitHub.js");
 
 /***/ }),
 
-/***/ 3611:
-/***/ ((module) => {
-
-module.exports = eval("require")("src/util.js");
-
-
-/***/ }),
-
 /***/ 9491:
 /***/ ((module) => {
 
@@ -26684,10 +26676,20 @@ module.exports = parseParams
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(2186);
-/* harmony import */ var src_GitHub_js__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(5655);
-/* harmony import */ var src_util_js__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(3611);
-/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_3__ = __nccwpck_require__(3837);
+
+// EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
+var core = __nccwpck_require__(2186);
+// EXTERNAL MODULE: ./node_modules/@vercel/ncc/dist/ncc/@@notfound.js?src/GitHub.js
+var GitHub = __nccwpck_require__(5655);
+;// CONCATENATED MODULE: ./lib/action-utils.js
+
+function getRequiredInput(name) {
+    return core.getInput(name, { required: true });
+}
+//# sourceMappingURL=action-utils.js.map
+// EXTERNAL MODULE: external "util"
+var external_util_ = __nccwpck_require__(3837);
+;// CONCATENATED MODULE: ./lib/actions/create-security-configuration.js
 
 
 
@@ -26697,19 +26699,19 @@ async function run() {
         await exec();
     }
     catch (err) {
-        _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug((0,util__WEBPACK_IMPORTED_MODULE_3__.inspect)(err));
-        _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(err);
+        core.debug((0,external_util_.inspect)(err));
+        core.setFailed(err);
     }
 }
 run();
 async function exec() {
     const inputs = {
-        token: (0,src_util_js__WEBPACK_IMPORTED_MODULE_2__.getRequiredInput)('github_token'),
-        apiUrl: (0,src_util_js__WEBPACK_IMPORTED_MODULE_2__.getRequiredInput)('github_api_url'),
-        org: (0,src_util_js__WEBPACK_IMPORTED_MODULE_2__.getRequiredInput)('organization'),
-        name: (0,src_util_js__WEBPACK_IMPORTED_MODULE_2__.getRequiredInput)('name'),
-        description: (0,src_util_js__WEBPACK_IMPORTED_MODULE_2__.getRequiredInput)('description'),
-        configuration: (0,src_util_js__WEBPACK_IMPORTED_MODULE_2__.getRequiredInput)('configuration'),
+        token: getRequiredInput('github_token'),
+        apiUrl: getRequiredInput('github_api_url'),
+        org: getRequiredInput('organization'),
+        name: getRequiredInput('name'),
+        description: getRequiredInput('description'),
+        configuration: getRequiredInput('configuration'),
     };
     let parsedConfig;
     try {
@@ -26717,21 +26719,19 @@ async function exec() {
         parsedConfig = JSON.parse(inputs.configuration);
     }
     catch (err) {
-        _actions_core__WEBPACK_IMPORTED_MODULE_0__.error(err);
-        _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(`The provided configuration was not valid JSON, ${err.message}`);
+        core.error(err);
+        core.setFailed(`The provided configuration was not valid JSON, ${err.message}`);
         return;
     }
-    const github = new src_GitHub_js__WEBPACK_IMPORTED_MODULE_1__.GitHub(inputs.token, inputs.apiUrl);
+    const github = new GitHub.GitHub(inputs.token, inputs.apiUrl);
     const existing = await github.getSecurityConfigurationByName(inputs.org, inputs.name);
     if (existing) {
-        _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(`An existing security group exists with the name: ${inputs.name} in organization: ${inputs.org}`);
+        core.setFailed(`An existing security group exists with the name: ${inputs.name} in organization: ${inputs.org}`);
         return;
     }
-    const configuration = (0,src_GitHub_js__WEBPACK_IMPORTED_MODULE_1__.getSecurityConfigurationObject)(inputs.name, inputs.description, parsedConfig);
+    const configuration = (0,GitHub.getSecurityConfigurationObject)(inputs.name, inputs.description, parsedConfig);
     await github.createSecurityConfiguration(inputs.org, configuration);
 }
 //# sourceMappingURL=create-security-configuration.js.map
 })();
 
-
-//# sourceMappingURL=index.js.map

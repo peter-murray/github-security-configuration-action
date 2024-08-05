@@ -1,4 +1,4 @@
-import './sourcemap-register.cjs';import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module";
+import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module";
 /******/ var __webpack_modules__ = ({
 
 /***/ 7351:
@@ -28889,14 +28889,6 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 3611:
-/***/ ((module) => {
-
-module.exports = eval("require")("src/util.js");
-
-
-/***/ }),
-
 /***/ 9491:
 /***/ ((module) => {
 
@@ -30750,6 +30742,12 @@ var __webpack_exports__ = {};
 
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
 var core = __nccwpck_require__(2186);
+;// CONCATENATED MODULE: ./lib/action-utils.js
+
+function getRequiredInput(name) {
+    return core.getInput(name, { required: true });
+}
+//# sourceMappingURL=action-utils.js.map
 // EXTERNAL MODULE: external "util"
 var external_util_ = __nccwpck_require__(3837);
 // EXTERNAL MODULE: ./node_modules/@octokit/rest/dist-node/index.js
@@ -30868,8 +30866,6 @@ function getOctokit(token, baseUrl) {
     return new dist_node.Octokit({ auth: octokitToken, baseUrl: resolvedUrl });
 }
 //# sourceMappingURL=GitHub.js.map
-// EXTERNAL MODULE: ./node_modules/@vercel/ncc/dist/ncc/@@notfound.js?src/util.js
-var util = __nccwpck_require__(3611);
 ;// CONCATENATED MODULE: ./lib/actions/get-security-configuration.js
 
 
@@ -30887,10 +30883,10 @@ async function run() {
 run();
 async function exec() {
     const inputs = {
-        token: (0,util.getRequiredInput)('github_token'),
-        apiUrl: (0,util.getRequiredInput)('github_api_url'),
-        org: (0,util.getRequiredInput)('organization'),
-        name: (0,util.getRequiredInput)('name'),
+        token: getRequiredInput('github_token'),
+        apiUrl: getRequiredInput('github_api_url'),
+        org: getRequiredInput('organization'),
+        name: getRequiredInput('name'),
     };
     const github = new GitHub(inputs.token, inputs.apiUrl);
     const matched = await github.getSecurityConfigurationByName(inputs.org, inputs.name);
@@ -30914,5 +30910,3 @@ function setOutput(name, value) {
 //# sourceMappingURL=get-security-configuration.js.map
 })();
 
-
-//# sourceMappingURL=index.js.map

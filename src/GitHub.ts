@@ -13,7 +13,6 @@ export const DEFAULT_SECURITY_CONFIGURATION: GitHubSecurityConfigurationOptions 
   private_vulnerability_reporting: 'disabled',
 }
 
-
 export class GitHub {
 
   private octokit: Octokit;
@@ -21,7 +20,6 @@ export class GitHub {
   constructor(token?: string, baseUrl?: string) {
     this.octokit = getOctokit(token, baseUrl);
   }
-
 
   async getAllSecurityConfigurations(org: string): Promise<SecurityConfiguration[]> {
     const response = await this.octokit.request('GET /orgs/{org}/security/configurations', {

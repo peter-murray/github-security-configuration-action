@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./lib",
+    // "rootDir": "./src",
     "alwaysStrict": true,
 
     "allowSyntheticDefaultImports": true,
