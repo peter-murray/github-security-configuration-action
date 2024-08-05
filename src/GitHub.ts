@@ -22,7 +22,7 @@ export class GitHub {
   }
 
   async getAllSecurityConfigurations(org: string): Promise<SecurityConfiguration[]> {
-    const response = await this.octokit.request('GET /orgs/{org}/security/configurations', {
+    const response = await this.octokit.request('GET /orgs/{org}/code-security/configurations', {
       org: org,
       headers: {
         'X-GitHub-Api-Version': '2022-11-28'
@@ -34,7 +34,7 @@ export class GitHub {
 
   async getSecurityConfiguration(org: string, id: number): Promise<SecurityConfiguration | undefined> {
     try {
-      const response = await this.octokit.request('GET /orgs/{org}/security/configurations/{configuration_id}', {
+      const response = await this.octokit.request('GET /orgs/{org}/code-security/configurations/{configuration_id}', {
         org: org,
         configuration_id: id,
         headers: {
@@ -56,7 +56,7 @@ export class GitHub {
   }
 
   async createSecurityConfiguration(org: string, config: GitHubSecurityConfiguration): Promise<boolean> {
-    const result = await this.octokit.request('POST /orgs/{org}/security/configurations', {
+    const result = await this.octokit.request('POST /orgs/{org}/code-security/configurations', {
       org: org,
       ...config,
       headers: {

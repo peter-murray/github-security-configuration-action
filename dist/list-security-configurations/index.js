@@ -30805,7 +30805,7 @@ class GitHub {
         this.octokit = getOctokit(token, baseUrl);
     }
     async getAllSecurityConfigurations(org) {
-        const response = await this.octokit.request('GET /orgs/{org}/security/configurations', {
+        const response = await this.octokit.request('GET /orgs/{org}/code-security/configurations', {
             org: org,
             headers: {
                 'X-GitHub-Api-Version': '2022-11-28'
@@ -30815,7 +30815,7 @@ class GitHub {
     }
     async getSecurityConfiguration(org, id) {
         try {
-            const response = await this.octokit.request('GET /orgs/{org}/security/configurations/{configuration_id}', {
+            const response = await this.octokit.request('GET /orgs/{org}/code-security/configurations/{configuration_id}', {
                 org: org,
                 configuration_id: id,
                 headers: {
@@ -30836,7 +30836,7 @@ class GitHub {
         return configurations.find((config) => config.name === name);
     }
     async createSecurityConfiguration(org, config) {
-        const result = await this.octokit.request('POST /orgs/{org}/security/configurations', {
+        const result = await this.octokit.request('POST /orgs/{org}/code-security/configurations', {
             org: org,
             ...config,
             headers: {
