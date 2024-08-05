@@ -30811,7 +30811,7 @@ class GitHub {
                 'X-GitHub-Api-Version': '2022-11-28'
             }
         });
-        return response.data.map((config) => { new SecurityConfiguration(config); });
+        return response.data.map((config) => { return new SecurityConfiguration(config); });
     }
     async getSecurityConfiguration(org, id) {
         try {

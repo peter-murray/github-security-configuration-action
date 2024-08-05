@@ -1,7 +1,37 @@
 import { describe, expect, it } from 'vitest';
-import { getSecurityConfigurationObject } from './GitHub';
+import { getSecurityConfigurationObject, GitHub } from './GitHub';
+import { isExportDeclaration } from 'typescript';
 
 describe('GitHub', () => {
+
+  const github = new GitHub(getTestToken())
+
+  function getTestToken(): string {
+    return process.env.TEST_GITHUB_TOKEN || '';
+  }
+
+  describe('#getAllSecurityConfigurations()', () => {
+
+    it('should return an array of security configurations', async () => {
+      const result = await github.getAllSecurityConfigurations('octodemo');
+
+      expect(result).toBeDefined();
+      expect(result).toBeInstanceOf(Array);
+      expect(result.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('#getSecurityConfigurationByName()', () => {
+
+    it('should fetch a configuration that exists', async () => {
+      const result = await github.getSecurityConfigurationByName('octodemo', 'GitHub Demo -- Default Security COnfiguration');
+    });
+
+    it('should return undefined if the configuration does not exist', async () => {
+      const result = await github.getSecurityConfigurationByName('octodemo', 'does-not-exist');
+      expect(result).toBeUndefined();
+    });
+  });
 
   describe('#getSecurityConfigurationObject()', () => {
 
@@ -22,6 +52,5 @@ describe('GitHub', () => {
       expect(result.advanced_security).toBe('enabled');
       expect(result.dependency_graph).toBe('enabled');
     });
-  })
-
+  });
 });

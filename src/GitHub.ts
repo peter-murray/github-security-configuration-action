@@ -29,7 +29,7 @@ export class GitHub {
       }
     });
 
-    return response.data.map((config: any) => { new SecurityConfiguration(config) });
+    return response.data.map((config: any) => { return new SecurityConfiguration(config) });
   }
 
   async getSecurityConfiguration(org: string, id: number): Promise<SecurityConfiguration | undefined> {
@@ -52,9 +52,11 @@ export class GitHub {
 
   async getSecurityConfigurationByName(org: string, name: string): Promise<SecurityConfiguration | undefined> {
     const configurations = await this.getAllSecurityConfigurations(org);
+
     if (configurations.length > 0) {
       return configurations.find((config) => config.name === name);
     }
+
     return undefined;
   }
 
