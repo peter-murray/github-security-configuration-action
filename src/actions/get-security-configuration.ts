@@ -35,7 +35,7 @@ async function exec() {
     setOutput('is_enforced', matched.isEnforced);
     core.endGroup();
   } else {
-    core.info(`No security configuration found with name: ${inputs.name} in organization: ${inputs.org}`);
+    core.info(`No security configuration found with name: '${inputs.name}' in organization: ${inputs.org}`);
   }
 }
 

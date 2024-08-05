@@ -30903,7 +30903,7 @@ async function exec() {
         core.endGroup();
     }
     else {
-        core.info(`No security configuration found with name: ${inputs.name} in organization: ${inputs.org}`);
+        core.info(`No security configuration found with name: '${inputs.name}' in organization: ${inputs.org}`);
     }
 }
 function setOutput(name, value) {

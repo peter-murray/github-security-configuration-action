@@ -30911,6 +30911,9 @@ async function exec() {
         return;
     }
     const configuration = getSecurityConfigurationObject(inputs.name, inputs.description, parsedConfig);
+    core.startGroup(`Creating security configuration: ${inputs.org}/${inputs.name}`);
+    core.info(JSON.stringify(configuration, null, 2));
+    core.endGroup();
     await github.createSecurityConfiguration(inputs.org, configuration);
 }
 //# sourceMappingURL=create-security-configuration.js.map
