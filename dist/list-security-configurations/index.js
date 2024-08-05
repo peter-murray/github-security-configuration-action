@@ -30801,8 +30801,10 @@ const DEFAULT_SECURITY_CONFIGURATION = {
 };
 class GitHub {
     octokit;
+    apiUrl;
     constructor(token, baseUrl) {
-        this.octokit = getOctokit(token, baseUrl);
+        this.apiUrl = baseUrl || process.env.GITHUB_API_URL || 'https://api.github.com';
+        this.octokit = getOctokit(this.apiUrl, token);
     }
     async getAllSecurityConfigurations(org) {
         const response = await this.octokit.request('GET /orgs/{org}/code-security/configurations', {
@@ -30852,21 +30854,27 @@ class GitHub {
         //TODO
         // 200 updated, 204 no changes made
     }
+    getSecurityConfigurationObject(name, description, config, enforced = false) {
+        const mergedConfig = {
+            ...DEFAULT_SECURITY_CONFIGURATION,
+            ...config,
+            name: name,
+            description: description,
+            enforcement: enforced ? 'enforced' : 'unenforced'
+        };
+        if (this.isMultiTenant()) {
+            //@ts-ignore 
+            delete mergedConfig?.secret_scanning_validity_checks;
+        }
+        return mergedConfig;
+    }
+    isMultiTenant() {
+        return this.apiUrl.indexOf('ghe.com') > -1;
+    }
 }
-function getSecurityConfigurationObject(name, description, config, enforced = false) {
-    const mergedConfig = {
-        ...DEFAULT_SECURITY_CONFIGURATION,
-        ...config,
-        name: name,
-        description: description,
-        enforcement: enforced ? 'enforced' : 'unenforced'
-    };
-    return mergedConfig;
-}
-function getOctokit(token, baseUrl) {
+function getOctokit(baseUrl, token) {
     let octokitToken = token || process.env.GITHUB_TOKEN;
-    let resolvedUrl = baseUrl || process.env.GITHUB_API_URL || 'https://api.github.com';
-    return new dist_node.Octokit({ auth: octokitToken, baseUrl: resolvedUrl });
+    return new dist_node.Octokit({ auth: octokitToken, baseUrl: baseUrl });
 }
 //# sourceMappingURL=GitHub.js.map
 ;// CONCATENATED MODULE: ./lib/actions/list-security-configurations.js

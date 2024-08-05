@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getSecurityConfigurationObject, GitHub } from './GitHub';
-import { isExportDeclaration } from 'typescript';
+import { GitHub } from './GitHub';
 
 describe('GitHub', () => {
 
@@ -24,7 +23,8 @@ describe('GitHub', () => {
   describe('#getSecurityConfigurationByName()', () => {
 
     it('should fetch a configuration that exists', async () => {
-      const result = await github.getSecurityConfigurationByName('octodemo', 'GitHub Demo -- Default Security COnfiguration');
+      const result = await github.getSecurityConfigurationByName('octodemo', 'GitHub Demo -- Default Security Configuration');
+      expect(result).toBeDefined();
     });
 
     it('should return undefined if the configuration does not exist', async () => {
@@ -36,7 +36,7 @@ describe('GitHub', () => {
   describe('#getSecurityConfigurationObject()', () => {
 
     it('should return a GitHubSecurityConfiguration object', () => {
-      const result = getSecurityConfigurationObject('name', 'description', {});
+      const result = github.getSecurityConfigurationObject('name', 'description', {});
 
       expect(result.name).toBe('name');
       expect(result.description).toBe('description');
@@ -45,7 +45,7 @@ describe('GitHub', () => {
     });
 
     it('should merge settings', () => {
-      const result = getSecurityConfigurationObject('name', 'description', { advanced_security: 'enabled' });
+      const result = github.getSecurityConfigurationObject('name', 'description', { advanced_security: 'enabled' });
 
       expect(result.name).toBe('name');
       expect(result.description).toBe('description');

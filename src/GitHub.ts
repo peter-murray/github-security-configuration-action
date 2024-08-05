@@ -17,8 +17,12 @@ export class GitHub {
 
   private octokit: Octokit;
 
+  private apiUrl: string;
+
   constructor(token?: string, baseUrl?: string) {
-    this.octokit = getOctokit(token, baseUrl);
+    this.apiUrl = baseUrl || process.env.GITHUB_API_URL || 'https://api.github.com';
+
+    this.octokit = getOctokit(this.apiUrl, token);
   }
 
   async getAllSecurityConfigurations(org: string): Promise<SecurityConfiguration[]> {
@@ -76,23 +80,31 @@ export class GitHub {
     //TODO
     // 200 updated, 204 no changes made
   }
+
+  getSecurityConfigurationObject(name: string, description: string, config: Partial<GitHubSecurityConfigurationOptions>, enforced: boolean = false): GitHubSecurityConfiguration {
+    const mergedConfig: GitHubSecurityConfiguration = {
+      ...DEFAULT_SECURITY_CONFIGURATION,
+      ...config,
+      name: name,
+      description: description,
+      enforcement: enforced ? 'enforced' : 'unenforced'
+    };
+
+    if (this.isMultiTenant()) {
+      //@ts-ignore 
+      delete mergedConfig?.secret_scanning_validity_checks;
+    }
+
+    return mergedConfig;
+  }
+
+  private isMultiTenant() {
+    return this.apiUrl.indexOf('ghe.com') > -1;
+  }
 }
 
-export function getSecurityConfigurationObject(name: string, description: string, config: Partial<GitHubSecurityConfigurationOptions>, enforced: boolean = false): GitHubSecurityConfiguration {
-  const mergedConfig: GitHubSecurityConfiguration = {
-    ...DEFAULT_SECURITY_CONFIGURATION,
-    ...config,
-    name: name,
-    description: description,
-    enforcement: enforced ? 'enforced' : 'unenforced'
-  };
 
-  return mergedConfig;
-}
-
-
-function getOctokit(token?: string, baseUrl?: string): Octokit {
+function getOctokit(baseUrl: string, token?: string, ): Octokit {
   let octokitToken = token || process.env.GITHUB_TOKEN;
-  let resolvedUrl = baseUrl || process.env.GITHUB_API_URL || 'https://api.github.com';
-  return new Octokit({ auth: octokitToken, baseUrl: resolvedUrl });
+  return new Octokit({ auth: octokitToken, baseUrl: baseUrl });
 }

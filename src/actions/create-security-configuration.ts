@@ -1,5 +1,5 @@
 import * as core from '@actions/core';
-import { getSecurityConfigurationObject, GitHub } from '../GitHub.js';
+import { GitHub } from '../GitHub.js';
 import { GitHubSecurityConfigurationOptions } from '../SecurityConfiguration.js';
 import { getRequiredInput } from '../action-utils.js';
 import { inspect } from 'util';
@@ -44,10 +44,10 @@ async function exec() {
     return;
   }
 
-  const configuration = getSecurityConfigurationObject(inputs.name, inputs.description, parsedConfig);
+  const configuration = github.getSecurityConfigurationObject(inputs.name, inputs.description, parsedConfig);
   core.startGroup(`Creating security configuration: ${inputs.org}/${inputs.name}`);
   core.info(JSON.stringify(configuration, null, 2));
   core.endGroup();
-  
+
   await github.createSecurityConfiguration(inputs.org, configuration);
 }
