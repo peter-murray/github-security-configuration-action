@@ -30767,6 +30767,7 @@ class SecurityConfiguration {
             advanced_security: this.config.advanced_security,
             dependency_graph: this.config.dependency_graph,
             dependabot_alerts: this.config.dependabot_alerts,
+            dependency_graph_autosubmit_action: this.config.dependency_graph_autosubmit_action,
             dependabot_security_updates: this.config.dependabot_security_updates,
             code_scanning_default_setup: this.config.code_scanning_default_setup,
             secret_scanning: this.config.secret_scanning,
@@ -30783,6 +30784,7 @@ class SecurityConfiguration {
 const DEFAULT_SECURITY_CONFIGURATION = {
     advanced_security: 'disabled',
     dependency_graph: 'enabled',
+    dependency_graph_autosubmit_action: 'disabled',
     dependabot_alerts: 'disabled',
     dependabot_security_updates: 'disabled',
     code_scanning_default_setup: 'disabled',
@@ -30855,7 +30857,7 @@ class GitHub {
             enforcement: enforced ? 'enforced' : 'unenforced'
         };
         if (this.isMultiTenant()) {
-            //@ts-ignore 
+            //@ts-ignore
             delete mergedConfig?.secret_scanning_validity_checks;
         }
         return mergedConfig;

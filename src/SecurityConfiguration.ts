@@ -6,6 +6,7 @@ export type Enforcement = 'enforced' | 'unenforced';
 export type GitHubSecurityConfigurationOptions = {
   advanced_security: GitHubSecurityFeatureState;
   dependency_graph: GitHubSecurityFeatureState;
+  dependency_graph_autosubmit_action: GitHubSecurityFeatureState;
   dependabot_alerts: GitHubSecurityFeatureState;
   dependabot_security_updates: GitHubSecurityFeatureState;
   code_scanning_default_setup: GitHubSecurityFeatureState;
@@ -60,6 +61,7 @@ export class SecurityConfiguration {
       advanced_security: this.config.advanced_security,
       dependency_graph: this.config.dependency_graph,
       dependabot_alerts: this.config.dependabot_alerts,
+      dependency_graph_autosubmit_action: this.config.dependency_graph_autosubmit_action,
       dependabot_security_updates: this.config.dependabot_security_updates,
       code_scanning_default_setup: this.config.code_scanning_default_setup,
       secret_scanning: this.config.secret_scanning,

@@ -4,6 +4,7 @@ import { GitHubSecurityConfiguration, GitHubSecurityConfigurationOptions, Securi
 export const DEFAULT_SECURITY_CONFIGURATION: GitHubSecurityConfigurationOptions = {
   advanced_security: 'disabled',
   dependency_graph: 'enabled',
+  dependency_graph_autosubmit_action: 'disabled',
   dependabot_alerts: 'disabled',
   dependabot_security_updates: 'disabled',
   code_scanning_default_setup: 'disabled',
@@ -91,7 +92,7 @@ export class GitHub {
     };
 
     if (this.isMultiTenant()) {
-      //@ts-ignore 
+      //@ts-ignore
       delete mergedConfig?.secret_scanning_validity_checks;
     }
 
