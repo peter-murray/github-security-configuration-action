@@ -30859,6 +30859,8 @@ class GitHub {
         if (this.isMultiTenant()) {
             //@ts-ignore
             delete mergedConfig?.secret_scanning_validity_checks;
+            //@ts-ignore
+            delete mergedConfig?.private_vulnerability_reporting;
         }
         return mergedConfig;
     }
